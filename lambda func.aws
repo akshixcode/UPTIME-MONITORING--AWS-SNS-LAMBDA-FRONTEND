@@ -1,0 +1,20 @@
+const AWS = require('aws-sdk');
+const sns = new AWS.SNS();
+
+exports.handler = async (event) => {
+  console.log("🔍 Lambda triggered");
+
+  const params = {
+    Message: '🔔 Uptime alert triggered!',
+    TopicArn: 'arn:aws:sns:ap-south-1:060069296884:instant-alerts-topic'
+  };
+
+  try {
+    const result = await sns.publish(params).promise();
+    console.log("✅ SNS message sent:", result);
+  } catch (err) {
+    console.error("❌ SNS publish failed:", err.message);
+    console.error("Stack Trace:", err.stack);
+  }
+};
+

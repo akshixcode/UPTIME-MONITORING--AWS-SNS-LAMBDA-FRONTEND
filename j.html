@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Realtime Uptime Monitor for Static Sites</title>
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72, #2a5298);
+      color: #f0f0f0;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    a {
+      color: #4fc3f7;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+    a:hover {
+      color: #81d4fa;
+    }
+
+    header {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.3rem;
+      letter-spacing: 2px;
+    }
+    header p {
+      font-size: 1.2rem;
+      color: #a5d8ff;
+      font-weight: 500;
+    }
+
+    main {
+      flex: 1;
+      padding: 3rem 1.5rem;
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+      text-align: center;
+    }
+
+    .hero {
+      margin-bottom: 3rem;
+    }
+    .hero h2 {
+      font-size: 2rem;
+      color: #a5d8ff;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      color: #d0e8ff;
+    }
+
+    /* Status card */
+    .status-card {
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 320px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+      color: #f0f0f0;
+      font-weight: 600;
+    }
+    .status-card .status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .status-card .status .indicator {
+      width: 18px;
+      height: 18px;
+      background-color: #4caf50; /* Green for online */
+      border-radius: 50%;
+      box-shadow:
+        0 0 5px #4caf50,
+        0 0 10px #4caf50;
+      animation: pulse 2s infinite ease-in-out;
+    }
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.3);
+        opacity: 0.7;
+      }
+    }
+    .status-card .details {
+      font-size: 1rem;
+      color: #c9e7ff;
+    }
+
+    /* Features section */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    .feature {
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 1.5rem;
+      width: 260px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      transition: background 0.3s ease;
+    }
+    .feature:hover {
+      background: rgba(79, 195, 247, 0.2);
+      box-shadow: 0 6px 20px rgba(0,123,255,0.6);
+    }
+    .feature h3 {
+      margin-bottom: 0.8rem;
+      color: #81d4fa;
+    }
+    .feature p {
+      font-size: 0.95rem;
+      color: #d0e8ff;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #a5d8ff;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.3);
+      margin-top: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      .features {
+        flex-direction: column;
+        align-items: center;
+      }
+      .feature {
+        width: 90%;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      .hero h2 {
+        font-size: 1.6rem;
+      }
+    }
+    button {
+      background: #0288d1;
+      color: #fff;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Realtime Uptime Monitor</h1>
+    <p>Keep your static sites always online and healthy</p>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Introduction">
+      <h2>Stay Informed, Stay Online</h2>
+      <p>Our real-time uptime monitor checks your static site constantly and alerts you immediately if any downtime is detected, ensuring your visitors never miss a moment.</p>
+    </section>
+
+    <section class="status-card" aria-label="Site status">
+      <div class="status">
+        <span class="indicator" aria-hidden="true"></span>
+        <span>www.example-static-site.com is <strong>Online</strong></span>
+      </div>
+      <div class="details">Last checked: 5 seconds ago</div>
+    </section>
+
+    <section class="features" aria-label="Features">
+      <article class="feature">
+      <button onclick="sendAlert()">Instant Alerts</button>
+        <p>Receive immediate notifications via email or SMS when your site goes down.</p>
+      </article>
+      <article class="feature">
+        <button>Detailed Reports</button>
+        <p>Access comprehensive uptime reports and analytics to monitor your site's performance over time.</p>
+      </article>
+      <article class="feature">
+        <button>Easy Setup</button>
+        <p>No complex installations. Start monitoring your static sites in minutes with our simple setup process.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2024 Realtime Uptime Monitor. All rights reserved.
+  </footer>
+<script>
+function sendAlert() {
+  fetch('https://idi66soj5ftzhtdmdh4faytrai0tmpdq.lambda-url.ap-south-1.on.aws/', {
+    method: 'POST'
+  })
+  .then(response => alert('Alert triggered!'))
+  .catch(error => alert('Error sending alert'));
+}
+</script>
+
+
+
+
+</body>
+</html>
